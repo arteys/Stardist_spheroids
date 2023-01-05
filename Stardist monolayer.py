@@ -26,7 +26,7 @@ paths = fd.askopenfilenames(parent=root, title='Open images')
 # paths = ["C:/Users/Modern/Desktop/Python/Stardist/Images/ApNec_300-20_3.tif",
 # "C:/Users/Modern/Desktop/Python/Stardist/Images/ApNec 600-20 3.tif",
 # "C:/Users/Modern/Desktop/Python/Stardist/Images/ApNec 600-20 1.tif" ]
-
+n = 0
 model = StarDist2D.from_pretrained('2D_versatile_fluo')
 for p in paths:
     mylist = []
@@ -40,12 +40,19 @@ for p in paths:
     name_suffixes = ['violet','green','red']
 
     folder,image_name = file_folder_name(p)
-    filename_violet = folder + "/Masks/" + image_name + 'violet' + '.tif'
-    filename_green = folder + "/Masks/" + image_name + 'green' + '.tif'
-    filename_red = folder + "/Masks/" + image_name + 'red' + '.tif'
+    filename_violet_mask = folder + "/Masks/" + str(n) + image_name + 'violet_mask' + '.tif'
+    filename_green_mask = folder + "/Masks/" + str(n) + image_name + 'green_mask' + '.tif'
+    filename_red_mask = folder + "/Masks/" + str(n) + image_name + 'red_mask' + '.tif'
 
-    print(filename_green)
+    filename_violet = folder + "/Masks/" + str(n) + image_name + 'violet_orig' + '.tif'
 
-    cv2.imwrite(filename_violet, labels_violet)
-    cv2.imwrite(filename_green, labels_green)
-    cv2.imwrite(filename_red, labels_red)
+
+    print(filename_green_mask)
+
+    cv2.imwrite(filename_violet_mask, labels_violet)
+    cv2.imwrite(filename_green_mask, labels_green)
+    cv2.imwrite(filename_red_mask, labels_red)
+
+    cv2.imwrite(filename_violet, image_violet[:,:,2])
+
+    n = n+1
